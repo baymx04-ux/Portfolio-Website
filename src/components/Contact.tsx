@@ -3,19 +3,32 @@
 import React, { useState } from 'react';
 
 export default function Contact() {
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.email || !formData.message) return;
+    if (!formData.name || !formData.email || !formData.message || status === 'sending') return;
 
-    const subject = `Project inquiry from ${formData.name}`;
-    const body = `${formData.message}\n\n— ${formData.name}\n${formData.email}`;
-    const mailtoUrl = `mailto:junaidkanwar04@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    setStatus('sending');
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
 
-    window.location.href = mailtoUrl;
-    setSubmitted(true);
+      if (!res.ok) {
+        setStatus('error');
+        return;
+      }
+
+      setStatus('sent');
+      setFormData({ name: '', email: '', message: '' });
+    } catch (err) {
+      console.error('Failed to send message', err);
+      setStatus('error');
+    }
   };
 
   return (
@@ -117,16 +130,24 @@ export default function Contact() {
 
           <button
             type="submit"
-            className="w-full bg-pine text-surface-container-lowest font-body-sm text-body-sm font-semibold py-3 rounded-[2px] hover:bg-primary transition-colors cursor-pointer text-center mt-space-2"
+            disabled={status === 'sending'}
+            className="w-full bg-pine text-surface-container-lowest font-body-sm text-body-sm font-semibold py-3 rounded-[2px] hover:bg-primary transition-colors cursor-pointer text-center mt-space-2 disabled:opacity-50"
           >
-            Send transmission
+            {status === 'sending' ? 'Transmitting...' : 'Send transmission'}
           </button>
 
-          {submitted && (
+          {status === 'sent' && (
             <div className="p-space-3 bg-surface border border-pine text-center rounded-[0px] animate-fade-in">
               <span className="font-code-sm text-code-sm text-pine font-medium">
-                Transmission drafted. Your email client should open with the message prefilled
-                to junaidkanwar04@gmail.com.
+                Transmission received. Replies are usually sent within 24 hours.
+              </span>
+            </div>
+          )}
+
+          {status === 'error' && (
+            <div className="p-space-3 bg-surface border border-error text-center rounded-[0px] animate-fade-in">
+              <span className="font-code-sm text-code-sm text-error font-medium">
+                Transmission failed. Please try again or email junaidkanwar04@gmail.com directly.
               </span>
             </div>
           )}

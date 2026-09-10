@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const all = searchParams.get('all') === 'true';
 
-  const projects = getAllProjects();
+  const projects = await getAllProjects();
   if (all && isAuthenticated(request)) {
     return NextResponse.json({ projects });
   }
@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Title and description are required' }, { status: 400 });
     }
 
-    const newProject = saveProject({
+    const newProject = await saveProject({
       title,
       slug: slug || title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
       description,

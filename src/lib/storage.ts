@@ -1,87 +1,102 @@
-import fs from 'fs';
-import path from 'path';
-import { Project } from './types';
-import { initialProjects } from './initial-projects';
+import type { Prisma, Project as ProjectRecord } from '@prisma/client';
+import type { Project } from './types';
+import { getDb } from './db';
 
-const dataDir = path.join(process.cwd(), 'data');
-const dataFilePath = path.join(dataDir, 'projects.json');
-
-function ensureDataFile(): void {
-  try {
-    if (!fs.existsSync(dataDir)) {
-      fs.mkdirSync(dataDir, { recursive: true });
-    }
-    if (!fs.existsSync(dataFilePath)) {
-      fs.writeFileSync(dataFilePath, JSON.stringify(initialProjects, null, 2), 'utf-8');
-    }
-  } catch (err) {
-    console.error('Error ensuring data file:', err);
-  }
+function toProject(row: ProjectRecord): Project {
+  return {
+    id: row.id,
+    title: row.title,
+    slug: row.slug,
+    description: row.description,
+    techStack: row.techStack,
+    imageUrl: row.imageUrl,
+    liveUrl: row.liveUrl ?? undefined,
+    githubUrl: row.githubUrl ?? undefined,
+    featured: row.featured,
+    status: row.status as Project['status'],
+    order: row.order,
+    createdAt: row.createdAt.toISOString(),
+    updatedAt: row.updatedAt.toISOString(),
+  };
 }
 
-export function getAllProjects(): Project[] {
-  ensureDataFile();
-  try {
-    const fileContent = fs.readFileSync(dataFilePath, 'utf-8');
-    const projects: Project[] = JSON.parse(fileContent);
-    return projects.sort((a, b) => a.order - b.order);
-  } catch (err) {
-    console.error('Error reading projects.json:', err);
-    return initialProjects;
-  }
+export async function getAllProjects(): Promise<Project[]> {
+  const rows = await getDb().project.findMany({ orderBy: { order: 'asc' } });
+  return rows.map(toProject);
 }
 
-export function getPublishedProjects(): Project[] {
-  return getAllProjects().filter((p) => p.status === 'published');
+export async function getPublishedProjects(): Promise<Project[]> {
+  const rows = await getDb().project.findMany({
+    where: { status: 'published' },
+    orderBy: { order: 'asc' },
+  });
+  return rows.map(toProject);
 }
 
-export function getProjectById(id: string): Project | undefined {
-  const projects = getAllProjects();
-  return projects.find((p) => p.id === id);
+export async function getProjectById(id: string): Promise<Project | null> {
+  const row = await getDb().project.findUnique({ where: { id } });
+  return row ? toProject(row) : null;
 }
 
-export function saveProject(project: Omit<Project, 'id' | 'createdAt' | 'updatedAt'> & { id?: string }): Project {
-  ensureDataFile();
-  const projects = getAllProjects();
-  const now = new Date().toISOString();
+type ProjectInput = Omit<Project, 'id' | 'createdAt' | 'updatedAt'> & { id?: string };
+
+function toUpdateData(project: ProjectInput): Prisma.ProjectUncheckedUpdateInput {
+  return {
+    title: project.title,
+    slug: project.slug,
+    description: project.description,
+    techStack: project.techStack,
+    imageUrl: project.imageUrl,
+    liveUrl: project.liveUrl || null,
+    githubUrl: project.githubUrl || null,
+    featured: project.featured,
+    status: project.status,
+    order: project.order,
+  };
+}
+
+function toCreateData(project: ProjectInput, id: string, order: number): Prisma.ProjectUncheckedCreateInput {
+  return {
+    id,
+    title: project.title,
+    slug: project.slug,
+    description: project.description,
+    techStack: project.techStack,
+    imageUrl: project.imageUrl,
+    liveUrl: project.liveUrl || null,
+    githubUrl: project.githubUrl || null,
+    featured: project.featured,
+    status: project.status,
+    order,
+  };
+}
+
+export async function saveProject(project: ProjectInput): Promise<Project> {
+  const db = getDb();
 
   if (project.id) {
-    // Update existing
-    const index = projects.findIndex((p) => p.id === project.id);
-    if (index !== -1) {
-      const updated: Project = {
-        ...projects[index],
-        ...project,
-        updatedAt: now,
-      };
-      projects[index] = updated;
-      fs.writeFileSync(dataFilePath, JSON.stringify(projects, null, 2), 'utf-8');
-      return updated;
+    const existing = await db.project.findUnique({ where: { id: project.id } });
+    if (existing) {
+      const row = await db.project.update({
+        where: { id: project.id },
+        data: toUpdateData(project),
+      });
+      return toProject(row);
     }
   }
 
-  // Create new
-  const newId = `proj_${Date.now()}`;
-  const newProject: Project = {
-    ...project,
-    id: newId,
-    order: projects.length + 1,
-    createdAt: now,
-    updatedAt: now,
-  };
-
-  projects.push(newProject);
-  fs.writeFileSync(dataFilePath, JSON.stringify(projects, null, 2), 'utf-8');
-  return newProject;
+  const max = await db.project.aggregate({ _max: { order: true } });
+  const order = project.order || (max._max.order ?? 0) + 1;
+  const id = project.id ?? `proj_${Date.now()}`;
+  const row = await db.project.create({ data: toCreateData(project, id, order) });
+  return toProject(row);
 }
 
-export function deleteProject(id: string): boolean {
-  ensureDataFile();
-  const projects = getAllProjects();
-  const filtered = projects.filter((p) => p.id !== id);
-  if (filtered.length !== projects.length) {
-    fs.writeFileSync(dataFilePath, JSON.stringify(filtered, null, 2), 'utf-8');
-    return true;
+export async function deleteProject(id: string): Promise<boolean> {
+  try {
+    const row = await getDb().project.delete({ where: { id } });
+    return row.id === id;
+  } catch {
+    return false;
   }
-  return false;
 }

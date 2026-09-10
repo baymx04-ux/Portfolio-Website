@@ -23,8 +23,9 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # local env files
-.env
-.env*.local
+.env*
+!.env.example
+.dev.vars
 
 # vercel
 .vercel
@@ -35,3 +36,8 @@ yarn-error.log*
 # runtime logs
 server.log
 server.pid
+
+# opennext / cloudflare build artifacts
+/.open-next/
+/.wrangler/
+cloudflare-env.d.ts

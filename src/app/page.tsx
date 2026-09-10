@@ -11,8 +11,8 @@ import { getPublishedProjects } from '@/lib/storage';
 
 export const dynamic = 'force-dynamic';
 
-export default function HomePage() {
-  const projects = getPublishedProjects();
+export default async function HomePage() {
+  const projects = await getPublishedProjects();
 
   return (
     <div className="min-h-screen bg-background text-ink selection:bg-pine selection:text-white">

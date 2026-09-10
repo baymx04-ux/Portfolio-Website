@@ -11,7 +11,7 @@ Build a high-performance, responsive portfolio web application for **Junaid Kanw
 > [!IMPORTANT]
 > - **Public View Concealment**: Per your request, the public portfolio navbar, header, and footer will contain **zero** references or links to the admin console. The dashboard is accessible solely by navigating directly to `/dashboard`.
 > - **Authentication**: Entering `/dashboard` prompts for the single administrative password (`secret04`). Once verified, the administrative session is retained (via an authenticated cookie), allowing full CRUD project management.
-> - **Data Persistence**: Projects are stored in a JSON-backed store (`data/projects.json`) initialized with your 4 resume projects (*Code Arena*, *Game Craft*, *Home Cook*, *2J Blogs*). Adding, editing, or deleting projects in `/dashboard` instantly updates the live public portfolio.
+> - **Data Persistence**: Projects are stored in PostgreSQL (Neon) via Prisma, initialized with your 4 resume projects (*Code Arena*, *Game Craft*, *Home Cook*, *2J Blogs*) through `prisma/seed.ts`. Adding, editing, or deleting projects in `/dashboard` instantly updates the live public portfolio.
 
 ---
 
@@ -81,7 +81,7 @@ Build a high-performance, responsive portfolio web application for **Junaid Kanw
 
 - **Framework**: Next.js 14+ (App Router) + TypeScript
 - **Styling**: Tailwind CSS configured with the exact color tokens, font families, and typography scales from Stitch (`content.md`) and `design.md`
-- **Database / Storage**: Local JSON-backed store (`data/projects.json`) via `src/lib/storage.ts` — zero-configuration, robust local persistence with instant public propagation
+- **Database / Storage**: PostgreSQL (Neon) via Prisma ORM with the Neon HTTP driver adapter (`@prisma/adapter-neon`). Per-request client memoized with React `cache()` (Cloudflare-compatible — no connection reuse across requests).
 - **API Endpoints**:
   - `GET /api/auth`: Check administrative session validity
   - `POST /api/auth`: Validate `"secret04"` and issue session cookie
@@ -90,6 +90,7 @@ Build a high-performance, responsive portfolio web application for **Junaid Kanw
   - `POST /api/projects`: Create a new project (admin auth)
   - `PUT /api/projects/[id]`: Update project details (admin auth)
   - `DELETE /api/projects/[id]`: Remove a project (admin auth)
+  - `POST /api/contact`: Validate and deliver contact-form inquiries via Resend
 
 ---
 
@@ -101,37 +102,44 @@ d:\Personal_Portfolio\
 ├── tsconfig.json
 ├── tailwind.config.ts
 ├── postcss.config.mjs
-├── next.config.mjs
-├── data/
-│   └── projects.json                    # JSON-backed project store
+├── next.config.mjs                 # serverExternalPackages + initOpenNextCloudflareForDev
+├── wrangler.jsonc                  # Cloudflare Workers runtime config
+├── open-next.config.ts             # OpenNext Cloudflare adapter config
+├── .env.example                    # DATABASE_URL / ADMIN_PASSWORD / RESEND_API_KEY
+├── prisma/
+│   ├── schema.prisma               # Postgres schema (Project model)
+│   └── seed.ts                     # Seeds the 4 initial projects from resume
 ├── src/
 │   ├── app/
 │   │   ├── layout.tsx
-│   │   ├── page.tsx                    # Public portfolio page
-│   │   ├── globals.css                 # Custom font imports, resets, tokens
-│   │   ├── icon.svg                    # Favicon
+│   │   ├── page.tsx                # Public portfolio page (async, Prisma-backed)
+│   │   ├── globals.css             # Custom font imports, resets, tokens
+│   │   ├── icon.svg                # Favicon
 │   │   ├── dashboard/
-│   │   │   └── page.tsx                # Password gate & Admin CMS
+│   │   │   └── page.tsx            # Password gate & Admin CMS
 │   │   └── api/
 │   │       ├── auth/
-│   │       │   └── route.ts            # Auth: GET (check) / POST (login) / DELETE (logout)
+│   │       │   └── route.ts        # Auth: GET (check) / POST (login) / DELETE (logout)
+│   │       ├── contact/
+│   │       │   └── route.ts        # POST contact form -> Resend
 │   │       └── projects/
-│   │           ├── route.ts            # GET / POST projects
+│   │           ├── route.ts        # GET / POST projects
 │   │           └── [id]/
-│   │               └── route.ts        # PUT / DELETE project
+│   │               └── route.ts    # PUT / DELETE project
 │   ├── components/
-│   │   ├── Navbar.tsx                  # Public navbar (no admin link)
-│   │   ├── Hero.tsx                    # Editorial hero + diagnostic terminal
-│   │   ├── About.tsx                   # Bio + specs panel
-│   │   ├── Skills.tsx                  # Technical taxonomy (Frontend, Backend, DevOps)
-│   │   ├── Projects.tsx                # Dynamic ProjectRows from database
-│   │   ├── Timeline.tsx                # Education & certifications timeline
-│   │   ├── Contact.tsx                 # Transmission contact form & mailto
-│   │   └── Footer.tsx                  # Clean footer with socials
+│   │   ├── Navbar.tsx              # Public navbar (no admin link)
+│   │   ├── Hero.tsx                # Editorial hero + diagnostic terminal
+│   │   ├── About.tsx               # Bio + specs panel
+│   │   ├── Skills.tsx              # Technical taxonomy (Frontend, Backend, DevOps)
+│   │   ├── Projects.tsx            # Dynamic ProjectRows from database
+│   │   ├── Timeline.tsx            # Education & certifications timeline
+│   │   ├── Contact.tsx             # Transmission contact form -> /api/contact
+│   │   └── Footer.tsx              # Clean footer with socials
 │   └── lib/
-│       ├── types.ts                    # Project & Auth type contracts
-│       ├── storage.ts                  # JSON persistence read/write helpers
-│       └── initial-projects.ts         # Seed data from resume
+│       ├── types.ts                # Project & Auth type contracts
+│       ├── db.ts                   # Prisma client (Neon adapter), per-request via cache()
+│       ├── storage.ts              # Async Prisma read/write helpers
+│       └── initial-projects.ts     # Seed data from resume
 ```
 
 ---
@@ -140,7 +148,7 @@ d:\Personal_Portfolio\
 
 ### Automated & Build Checks
 - Run `npm run build` to verify clean TypeScript compilation and Next.js static/dynamic route optimization.
-- Confirm `data/projects.json` is seeded with the initial project payload on first access.
+- Run `prisma generate` and (against a configured `DATABASE_URL`) `prisma migrate dev` + `npm run prisma:seed` to provision and populate PostgreSQL.
 
 ### Manual Verification Flows
 1. **Public Site Testing**:

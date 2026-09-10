@@ -10,9 +10,10 @@ function isAuthenticated(request: NextRequest): boolean {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const project = getProjectById(params.id);
+  const { id } = await params;
+  const project = await getProjectById(id);
   if (!project) {
     return NextResponse.json({ error: 'Project not found' }, { status: 404 });
   }
@@ -21,23 +22,24 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   if (!isAuthenticated(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
   try {
+    const { id } = await params;
     const body = await request.json();
-    const existing = getProjectById(params.id);
+    const existing = await getProjectById(id);
     if (!existing) {
       return NextResponse.json({ error: 'Project not found' }, { status: 404 });
     }
 
-    const updated = saveProject({
+    const updated = await saveProject({
       ...existing,
       ...body,
-      id: params.id,
+      id,
       techStack: Array.isArray(body.techStack)
         ? body.techStack
         : (body.techStack ? body.techStack.split(',').map((s: string) => s.trim()) : existing.techStack),
@@ -51,13 +53,14 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   if (!isAuthenticated(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const deleted = deleteProject(params.id);
+  const { id } = await params;
+  const deleted = await deleteProject(id);
   if (!deleted) {
     return NextResponse.json({ error: 'Project not found' }, { status: 404 });
   }

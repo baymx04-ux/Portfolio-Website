@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const ADMIN_PASSWORD = 'secret04';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD ?? 'secret04';
 const AUTH_COOKIE_NAME = 'jk_portfolio_admin_auth';
 
 function isSecureRequest(request: NextRequest): boolean {
