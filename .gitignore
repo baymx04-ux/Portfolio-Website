@@ -41,3 +41,10 @@ server.pid
 /.open-next/
 /.wrangler/
 cloudflare-env.d.ts
+.neon
+
+# agent tooling / logs / stray builds
+.agents/
+skills-lock.json
+dev-server.log
+/site/

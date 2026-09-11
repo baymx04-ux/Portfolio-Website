@@ -76,7 +76,7 @@ export default function Navbar() {
         {/* Right CTA */}
         <div className="hidden md:flex items-center gap-space-4">
           <a
-            href="mailto:junaidkanwar04@gmail.com"
+            href="#contact"
             className="inline-flex items-center gap-2 bg-pine text-surface-container-lowest font-body-sm text-[14px] font-semibold px-4 py-2 rounded-[2px] hover:bg-primary transition-colors cursor-pointer"
           >
             <span className="material-symbols-outlined text-[16px]">mail</span>
@@ -140,9 +140,10 @@ export default function Navbar() {
             Contact
           </a>
           <div className="pt-2 flex flex-col gap-2">
-            <a
-              href="mailto:junaidkanwar04@gmail.com"
-              className="w-full text-center bg-pine text-surface-container-lowest font-body-sm font-semibold py-2.5 rounded-[2px]"
+<a
+              href="#contact"
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-full text-center bg-pine text-surface-container-lowest font-body-sm font-medium py-2.5 rounded-[2px]"
             >
               Get in touch
             </a>

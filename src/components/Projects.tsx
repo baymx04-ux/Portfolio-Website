@@ -11,14 +11,14 @@ interface ProjectsProps {
 export default function Projects({ projects }: ProjectsProps) {
   return (
     <section className="w-full border-t border-border bg-background py-space-24 scroll-mt-24" id="projects">
-      <div className="max-w-[1200px] mx-auto px-6">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
         {/* Header */}
-        <div className="flex items-center justify-between mb-space-12">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-space-12 gap-space-4">
           <div>
             <span className="font-code-sm text-code-sm text-pine uppercase tracking-wider font-semibold">
-              03 // Projects
+              Projects
             </span>
-            <h2 className="font-headline-lg text-headline-lg text-ink mt-space-1 font-display">
+            <h2 className="font-headline-lg text-2xl sm:text-3xl lg:text-headline-lg text-ink mt-space-1 font-display">
               Selected Work
             </h2>
           </div>
@@ -35,9 +35,9 @@ export default function Projects({ projects }: ProjectsProps) {
             return (
               <article
                 key={project.id}
-                className="group border-t border-border py-space-12 transition-colors first:border-t-0"
+                className="group border-t border-border py-8 sm:py-space-12 transition-colors first:border-t-0"
               >
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-space-8 items-center">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-space-8 items-center">
                   {/* Image Column */}
                   <div
                     className={`lg:col-span-5 overflow-hidden border border-border bg-surface rounded-[0px] ${
@@ -50,8 +50,8 @@ export default function Projects({ projects }: ProjectsProps) {
                         alt={project.title}
                         width={1200}
                         height={675}
-                        sizes="(max-width: 1024px) 100vw, 45vw"
-                        className="w-full h-64 sm:h-72 object-cover filter contrast-105"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 45vw"
+                        className="w-full h-52 sm:h-64 lg:h-72 object-cover filter contrast-105"
                         loading="lazy"
                       />
                     </div>
@@ -63,7 +63,7 @@ export default function Projects({ projects }: ProjectsProps) {
                       isAlternate ? 'order-2 lg:order-1' : 'order-2'
                     }`}
                   >
-                    <div className="flex items-center gap-space-3 mb-space-3">
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-space-3 mb-space-3">
                       {project.featured && (
                         <span className="font-code-sm text-code-sm text-copper border border-copper px-2 py-0.5 rounded-[2px] font-semibold tracking-wide uppercase">
                           Featured Project
@@ -78,7 +78,7 @@ export default function Projects({ projects }: ProjectsProps) {
                       </span>
                     </div>
 
-                    <h3 className="font-headline-md text-2xl sm:text-headline-md text-ink mb-space-3 font-display group-hover:text-pine transition-colors">
+                    <h3 className="font-headline-md text-xl sm:text-2xl lg:text-headline-md text-ink mb-space-3 font-display group-hover:text-pine transition-colors">
                       {project.title}
                     </h3>
 
@@ -87,7 +87,7 @@ export default function Projects({ projects }: ProjectsProps) {
                     </p>
 
                     {/* Tech Stack Tokens */}
-                    <div className="flex flex-wrap gap-space-2 mb-space-6">
+                    <div className="flex flex-wrap gap-2 sm:gap-space-2 mb-space-6">
                       {project.techStack.map((tech) => (
                         <span
                           key={tech}
@@ -99,7 +99,7 @@ export default function Projects({ projects }: ProjectsProps) {
                     </div>
 
                     {/* Links */}
-                    <div className="flex items-center gap-space-6 font-body-sm text-body-sm">
+                    <div className="flex flex-wrap items-center gap-4 sm:gap-space-6 font-body-sm text-body-sm">
                       {project.liveUrl && (
                         <a
                           href={project.liveUrl}

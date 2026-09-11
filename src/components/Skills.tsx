@@ -36,13 +36,13 @@ export default function Skills() {
 
   return (
     <section className="w-full border-t border-border bg-background py-space-24 scroll-mt-24" id="skills">
-      <div className="max-w-[1200px] mx-auto px-6">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-space-8 gap-space-4">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-space-8 gap-space-4">
           <div>
             <span className="font-code-sm text-code-sm text-pine uppercase tracking-wider font-semibold">
-              02 // Skills
+              Skills
             </span>
-            <h2 className="font-headline-lg text-headline-lg text-ink mt-space-1 font-display">
+            <h2 className="font-headline-lg text-2xl sm:text-3xl lg:text-headline-lg text-ink mt-space-1 font-display">
               Technical Taxonomy
             </h2>
           </div>
@@ -51,17 +51,17 @@ export default function Skills() {
           </p>
         </div>
 
-        {/* 3 Columns Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-space-6">
+        {/* 3 Columns Grid — stacks on mobile, 2-col on tablet, 3-col on desktop */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-space-6">
           {skillCategories.map((cat) => (
             <div
               key={cat.index}
-              className="border border-border bg-surface p-space-6 flex flex-col justify-between rounded-[0px]"
+              className="border border-border bg-surface p-4 sm:p-space-6 flex flex-col justify-between rounded-[0px]"
             >
               <div>
                 <div className="flex items-center justify-between border-b border-border pb-space-3 mb-space-4">
                   <h3 className="font-body-md text-body-md font-semibold text-ink">{cat.title}</h3>
-                  <span className="font-code-sm text-code-sm text-ink-muted">{cat.index}</span>
+                  <span className="font-code-sm text-code-sm text-ink-muted shrink-0 ml-2">{cat.index}</span>
                 </div>
                 <p className="font-body-sm text-body-sm text-ink-muted mb-space-6">
                   {cat.description}
@@ -83,11 +83,11 @@ export default function Skills() {
         </div>
 
         {/* Professional Competencies Strip */}
-        <div className="mt-space-8 border border-border bg-surface/50 p-space-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-4">
-          <span className="font-code-sm text-code-sm text-ink-muted uppercase tracking-wider">
+        <div className="mt-space-8 border border-border bg-surface/50 p-3 sm:p-space-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-4">
+          <span className="font-code-sm text-code-sm text-ink-muted uppercase tracking-wider shrink-0">
             Professional Practice:
           </span>
-          <div className="flex flex-wrap gap-space-3">
+          <div className="flex flex-wrap gap-2 sm:gap-space-3">
             {softCompetencies.map((comp) => (
               <span
                 key={comp}

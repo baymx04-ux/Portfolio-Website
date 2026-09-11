@@ -5,21 +5,18 @@ import React from 'react';
 export default function Footer() {
   return (
     <footer className="w-full border-t border-border bg-background py-space-8">
-      <div className="max-w-[1200px] mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-space-4">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-space-4 text-center sm:text-left">
+
         {/* Status / Location */}
-        <div className="flex items-center gap-space-3">
-          <div className="w-2 h-2 rounded-full bg-pine"></div>
+        <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 sm:gap-space-3">
+          <div className="w-2 h-2 rounded-full bg-pine shrink-0"></div>
           <span className="font-code-sm text-code-sm text-ink-muted uppercase tracking-wider">
-            Islamabad, PK (UTC+5)
-          </span>
-          <span className="font-code-sm text-code-sm text-border">/</span>
-          <span className="font-code-sm text-code-sm text-pine font-medium">
-            Open to Engineering Opportunities
+            Islamabad, PK · UTC+5
           </span>
         </div>
 
         {/* Social Links */}
-        <div className="flex items-center gap-space-6 font-code-sm text-code-sm">
+        <div className="flex items-center gap-5 font-code-sm text-code-sm">
           <a
             href="https://github.com/baymx04-ux"
             target="_blank"
@@ -39,19 +36,18 @@ export default function Footer() {
           </a>
           <span className="text-border">|</span>
           <a
-            href="https://junaidkanwar.netlify.app/"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="mailto:junaidkanwar04@gmail.com"
             className="text-ink-muted hover:text-pine transition-colors"
           >
-            Portfolio
+            Email
           </a>
         </div>
 
         {/* Copyright */}
         <div className="font-code-sm text-code-sm text-ink-muted">
-          &copy; {new Date().getFullYear()} Kanwar Junaid Islam
+          &copy; {new Date().getFullYear()} Junaid Kanwar
         </div>
+
       </div>
     </footer>
   );
