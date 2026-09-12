@@ -10,15 +10,15 @@ export default function About() {
 
           {/* Left 7 Columns: Narrative Bio */}
           <div className="lg:col-span-7 flex flex-col">
-            <span className="font-code-sm text-code-sm text-pine uppercase tracking-wider font-semibold mb-space-3">
+            <span className="font-code-sm text-code-sm text-pine uppercase tracking-wider font-semibold mb-space-4">
               About
             </span>
 
-            <h2 className="font-headline-lg text-2xl sm:text-3xl lg:text-headline-lg text-ink mb-space-6 font-display">
+            <h2 className="font-display text-3xl sm:text-4xl lg:text-headline-lg text-ink mb-space-6 tracking-tight leading-tight">
               Building efficient web platforms with mechanical discipline.
             </h2>
 
-            <div className="font-body-md text-body-md text-ink space-y-space-4 max-w-[620px] leading-relaxed">
+            <div className="font-body-md text-body-md text-ink-muted space-y-space-5 max-w-[620px] leading-relaxed">
               <p>
                 I&apos;m a Computer Science student at Air University, Islamabad, with a strong foundation in full-stack web development. I engineer platforms characterized by low latency, intuitive user interactions, and robust asynchronous backends.
               </p>
@@ -28,34 +28,34 @@ export default function About() {
             </div>
           </div>
 
-          {/* Right 5 Columns: Specification Panel */}
-          <div className="lg:col-span-5 bg-surface border border-border p-4 sm:p-space-6 rounded-[0px]">
-            <div className="flex items-center justify-between border-b border-border pb-space-3 mb-space-4">
+          {/* Right 5 Columns: Quick Facts Card */}
+          <div className="lg:col-span-5 bg-white border border-border p-6 sm:p-space-8 rounded-2xl shadow-card">
+            <div className="flex items-center justify-between border-b border-border pb-space-4 mb-space-5">
               <span className="font-code-sm text-code-sm text-ink font-bold uppercase tracking-wider">
                 Quick Facts
               </span>
               <span className="font-code-sm text-code-sm text-pine font-semibold shrink-0 ml-2">2026</span>
             </div>
 
-            <dl className="space-y-space-4">
-              <div className="border-b border-border pb-space-3">
+            <dl className="space-y-space-5">
+              <div className="border-b border-border pb-space-4">
                 <dt className="font-code-sm text-code-sm text-ink-muted uppercase">Education</dt>
-                <dd className="font-body-md text-body-md text-ink font-medium mt-0.5">
+                <dd className="font-body-md text-body-md text-ink font-medium mt-1">
                   BS Computer Science<br />
                   <span className="text-ink-muted font-normal">Air University, Islamabad · 2022–2026</span>
                 </dd>
               </div>
 
-              <div className="border-b border-border pb-space-3">
+              <div className="border-b border-border pb-space-4">
                 <dt className="font-code-sm text-code-sm text-ink-muted uppercase">Core Interests</dt>
-                <dd className="font-body-md text-body-md text-ink font-medium mt-0.5">
+                <dd className="font-body-md text-body-md text-ink font-medium mt-1">
                   Systems design, developer tooling, and cloud-native infrastructure
                 </dd>
               </div>
 
               <div>
                 <dt className="font-code-sm text-code-sm text-ink-muted uppercase">Primary Toolchain</dt>
-                <dd className="font-body-md text-body-md text-ink font-medium mt-0.5">
+                <dd className="font-body-md text-body-md text-ink font-medium mt-1">
                   JavaScript · React · Node.js · Express · MongoDB · Docker
                 </dd>
               </div>

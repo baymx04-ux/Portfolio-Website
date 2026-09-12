@@ -49,100 +49,109 @@ export default function Timeline() {
   return (
     <section className="w-full border-t border-border bg-background py-space-24 scroll-mt-24" id="timeline">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 sm:mb-space-12 gap-space-4">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-space-12 gap-space-4">
           <div>
             <span className="font-code-sm text-code-sm text-pine uppercase tracking-wider font-semibold">
               Timeline
             </span>
-            <h2 className="font-headline-lg text-2xl sm:text-3xl lg:text-headline-lg text-ink mt-space-1 font-display">
-              Academic &amp; Professional Path
+            <h2 className="font-display text-3xl sm:text-4xl lg:text-headline-lg text-ink mt-space-2 tracking-tight">
+              Academic Path
             </h2>
           </div>
-          <span className="font-code-sm text-code-sm text-ink-muted">CHRONOLOGY 2018 — PRESENT</span>
         </div>
 
         {/* Timeline Items */}
         <div className="relative">
-          {/* Mobile: left border as timeline line */}
-          <div className="absolute left-0 top-0 bottom-0 w-[1px] bg-border md:hidden"></div>
+          {/* Vertical line */}
+          <div className="absolute left-[7px] md:left-1/2 top-2 bottom-2 w-px bg-border md:-translate-x-px"></div>
 
-          {timelineItems.map((item, idx) => (
-            <div
-              key={idx}
-              className="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-space-6 pb-8 sm:pb-space-12 relative last:pb-0 pl-5 md:pl-0"
-            >
-              {/* Mobile: marker dot on the left border */}
-              <div className="absolute left-[-3px] top-[6px] w-1.5 h-1.5 rounded-full bg-pine md:hidden"></div>
+          <div className="flex flex-col gap-6 sm:gap-space-8">
+            {timelineItems.map((item, idx) => {
+              const isLeft = idx % 2 === 0;
 
-              {/* Date column (desktop only) */}
-              <div className="md:col-span-3 hidden md:flex md:justify-end items-start pt-1">
-                <span className="font-code-md text-code-md text-ink font-semibold">
-                  {item.period}
-                </span>
-              </div>
+              return (
+                <div
+                  key={idx}
+                  className="relative md:grid md:grid-cols-2 md:gap-space-16"
+                >
+                  {/* Dot */}
+                  <div className="absolute left-0 top-6 md:left-1/2 md:-translate-x-1/2 w-[15px] h-[15px]">
+                    <span className="absolute inset-0 rounded-full bg-white border-2 border-pine"></span>
+                    <span className="absolute inset-[4px] rounded-full bg-pine"></span>
+                  </div>
 
-              {/* Vertical line and marker (desktop only) */}
-              <div className="hidden md:flex md:col-span-1 justify-center relative">
-                <div className="w-[1px] bg-border h-full absolute top-0"></div>
-                <div className="w-1.5 h-1.5 rounded-full bg-pine z-10 mt-2"></div>
-              </div>
-
-              {/* Content */}
-              <div className="md:col-span-8 flex flex-col">
-                {/* Period shown on mobile above the content */}
-                <span className="font-code-sm text-code-sm text-pine font-semibold mb-1 md:hidden">
-                  {item.period}
-                </span>
-                <div className="flex flex-wrap items-baseline gap-2 sm:gap-space-3 mb-space-2">
-                  <h3 className="font-headline-sm text-lg sm:text-headline-sm text-ink font-semibold">
-                    {item.title}
-                  </h3>
-                  <span className="font-body-md text-body-md text-pine font-medium">
-                    {item.institution}
-                  </span>
-                  <span className="font-code-sm text-code-sm text-ink-muted">
-                    {item.location}
-                  </span>
-                </div>
-
-                <p className="font-body-md text-body-md text-ink mb-space-3 leading-relaxed max-w-[700px]">
-                  {item.description}
-                </p>
-
-                <div className="flex flex-wrap gap-2 sm:gap-space-2">
-                  {item.badges.map((b) => (
-                    <span
-                      key={b}
-                      className="font-code-sm text-code-sm text-ink-muted bg-surface border border-border px-2 py-0.5 rounded-[2px]"
+                  {/* Card */}
+                  <div
+                    className={`ml-7 md:ml-0 bg-white border border-border rounded-2xl p-5 sm:p-space-6 shadow-card hover:shadow-card-lg transition-shadow ${
+                      isLeft ? 'md:col-start-1 md:text-right' : 'md:col-start-2'
+                    }`}
+                  >
+                    <div
+                      className={`flex flex-wrap items-baseline gap-2 sm:gap-space-3 mb-space-2 ${
+                        isLeft ? 'md:flex-row-reverse md:justify-start' : ''
+                      }`}
                     >
-                      {b}
-                    </span>
-                  ))}
+                      <span className="font-code-sm text-code-sm text-pine font-semibold">{item.period}</span>
+                      <span className="font-code-sm text-code-sm text-ink-muted">{item.location}</span>
+                    </div>
+                    <h3 className="font-headline-sm text-lg sm:text-headline-sm text-ink font-semibold mb-space-1 tracking-tight">
+                      {item.title}
+                    </h3>
+                    <span className="font-body-md text-body-md text-pine font-medium">{item.institution}</span>
+
+                    <p className="font-body-sm text-body-sm text-ink-muted mt-space-3 mb-space-4 leading-relaxed">
+                      {item.description}
+                    </p>
+
+                    <div
+                      className={`flex flex-wrap gap-2 ${
+                        isLeft ? 'md:justify-end' : ''
+                      }`}
+                    >
+                      {item.badges.map((b) => (
+                        <span
+                          key={b}
+                          className="font-code-sm text-code-sm text-ink bg-background border border-border px-3 py-1 rounded-full"
+                        >
+                          {b}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          ))}
+              );
+            })}
+          </div>
         </div>
 
         {/* Certifications Block */}
-        <div className="mt-12 sm:mt-space-16 pt-space-8 border-t border-border">
-          <div className="flex items-center justify-between mb-space-6">
+        <div className="mt-space-16 pt-space-10 border-t border-border">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-space-4 mb-space-6">
             <span className="font-code-sm text-code-sm text-pine uppercase tracking-wider font-semibold">
               Verified Certifications &amp; Accreditations
             </span>
+            <span className="font-code-sm text-code-sm text-ink-muted">{certifications.length} CREDENTIALS</span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-space-4">
             {certifications.map((cert, i) => (
               <div
                 key={i}
-                className="bg-surface border border-border p-3 sm:p-space-4 flex items-center justify-between rounded-[0px]"
+                className="group bg-white border border-border p-4 sm:p-space-5 flex items-center justify-between rounded-2xl shadow-card hover:shadow-card-lg hover:-translate-y-0.5 transition-all"
               >
-                <div>
-                  <h4 className="font-body-md text-body-md font-semibold text-ink">{cert.title}</h4>
-                  <span className="font-code-sm text-code-sm text-ink-muted">{cert.issuer}</span>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-pine/5 border border-pine/20 flex items-center justify-center text-pine shrink-0">
+                    <span className="material-symbols-outlined text-[20px]">verified</span>
+                  </div>
+                  <div>
+                    <h4 className="font-body-md text-body-md font-semibold text-ink group-hover:text-pine transition-colors">
+                      {cert.title}
+                    </h4>
+                    <span className="font-code-sm text-code-sm text-ink-muted">{cert.issuer}</span>
+                  </div>
                 </div>
-                <span className="font-code-sm text-code-sm text-pine border border-pine/30 bg-surface-bright px-2 py-0.5 rounded-[2px] shrink-0 ml-2">
+                <span className="inline-flex items-center gap-1.5 font-code-sm text-code-sm text-pine bg-pine/5 border border-pine/20 px-3 py-1.5 rounded-full shrink-0 ml-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-pine"></span>
                   {cert.year}
                 </span>
               </div>

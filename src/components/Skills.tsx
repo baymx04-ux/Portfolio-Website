@@ -37,18 +37,15 @@ export default function Skills() {
   return (
     <section className="w-full border-t border-border bg-background py-space-24 scroll-mt-24" id="skills">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-space-8 gap-space-4">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-space-12 gap-space-4">
           <div>
             <span className="font-code-sm text-code-sm text-pine uppercase tracking-wider font-semibold">
               Skills
             </span>
-            <h2 className="font-headline-lg text-2xl sm:text-3xl lg:text-headline-lg text-ink mt-space-1 font-display">
-              Technical Taxonomy
+            <h2 className="font-display text-3xl sm:text-4xl lg:text-headline-lg text-ink mt-space-2 tracking-tight">
+              Technical Arsenal
             </h2>
           </div>
-          <p className="font-code-sm text-code-sm text-ink-muted max-w-sm">
-            Disciplines arranged by architectural layer. Validated in real-world application builds.
-          </p>
         </div>
 
         {/* 3 Columns Grid — stacks on mobile, 2-col on tablet, 3-col on desktop */}
@@ -56,23 +53,25 @@ export default function Skills() {
           {skillCategories.map((cat) => (
             <div
               key={cat.index}
-              className="border border-border bg-surface p-4 sm:p-space-6 flex flex-col justify-between rounded-[0px]"
+              className="group bg-white border border-border p-6 sm:p-space-6 flex flex-col justify-between rounded-2xl shadow-card hover:shadow-card-lg hover:-translate-y-1 transition-all duration-200"
             >
               <div>
-                <div className="flex items-center justify-between border-b border-border pb-space-3 mb-space-4">
-                  <h3 className="font-body-md text-body-md font-semibold text-ink">{cat.title}</h3>
-                  <span className="font-code-sm text-code-sm text-ink-muted shrink-0 ml-2">{cat.index}</span>
+                <div className="flex items-start justify-between mb-space-4">
+                  <span className="font-code-sm text-code-sm text-pine font-bold shrink-0">{cat.index}</span>
+                  <h3 className="font-headline-sm text-headline-sm font-semibold text-ink group-hover:text-pine transition-colors text-right">
+                    {cat.title}
+                  </h3>
                 </div>
                 <p className="font-body-sm text-body-sm text-ink-muted mb-space-6">
                   {cat.description}
                 </p>
               </div>
 
-              <div className="flex flex-wrap gap-space-2">
+              <div className="flex flex-wrap gap-2">
                 {cat.skills.map((skill) => (
                   <span
                     key={skill}
-                    className="font-code-sm text-code-sm text-ink-muted bg-background border border-border px-2 py-1 rounded-[2px]"
+                    className="font-code-sm text-code-sm text-ink bg-background border border-border px-3 py-1 rounded-full"
                   >
                     {skill}
                   </span>
@@ -83,7 +82,7 @@ export default function Skills() {
         </div>
 
         {/* Professional Competencies Strip */}
-        <div className="mt-space-8 border border-border bg-surface/50 p-3 sm:p-space-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-4">
+        <div className="mt-space-10 bg-white border border-border p-4 sm:p-space-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-5 rounded-2xl shadow-card">
           <span className="font-code-sm text-code-sm text-ink-muted uppercase tracking-wider shrink-0">
             Professional Practice:
           </span>
@@ -91,7 +90,7 @@ export default function Skills() {
             {softCompetencies.map((comp) => (
               <span
                 key={comp}
-                className="font-code-sm text-code-sm text-pine bg-background border border-border px-2.5 py-0.5 rounded-[2px]"
+                className="font-code-sm text-code-sm text-pine bg-pine/5 border border-pine/20 px-3 py-1 rounded-full"
               >
                 {comp}
               </span>

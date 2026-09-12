@@ -31,53 +31,59 @@ export default function Contact() {
     }
   };
 
+  const inputClasses =
+    'w-full bg-white border border-border px-4 py-3.5 rounded-xl font-body-sm text-body-sm text-ink placeholder:text-outline-variant focus:outline-none focus:border-pine focus:ring-2 focus:ring-pine/15 transition-all';
+
   return (
     <section className="w-full border-t border-border bg-background py-space-24 scroll-mt-24" id="contact">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 flex flex-col items-center">
         {/* Section Marker */}
-        <div className="flex items-center gap-space-2 mb-space-3">
+        <div className="inline-flex items-center gap-space-2 mb-space-3">
           <span className="font-code-sm text-code-sm text-pine uppercase tracking-wider font-semibold">
             Contact
           </span>
         </div>
 
         {/* Display Headline */}
-        <h2 className="font-headline-lg text-2xl sm:text-3xl lg:text-headline-lg text-ink text-center mb-space-4 font-display">
+        <h2 className="font-display text-3xl sm:text-4xl lg:text-headline-lg text-ink text-center mb-space-5 tracking-tight">
           Let&apos;s build something impactful.
         </h2>
 
-        <p className="font-body-md text-body-md text-ink-muted text-center max-w-lg mb-space-4 leading-relaxed px-2">
+        <p className="font-body-md text-body-md text-ink-muted text-center max-w-lg mb-space-8 leading-relaxed px-2">
           Have a role, a collaboration, or a project in mind? Describe your scope below — I respond promptly.
         </p>
 
         {/* Direct Channel Links */}
-        <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-2 sm:gap-space-4 mb-space-12 font-code-sm text-code-sm text-center">
+        <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-2 sm:gap-space-3 mb-space-12 font-code-sm text-code-sm text-center">
           <a
             href="mailto:junaidkanwar04@gmail.com"
-            className="text-pine hover:text-ink transition-colors underline underline-offset-4 decoration-1 font-semibold break-all"
+            className="inline-flex items-center gap-2 text-pine bg-white border border-border px-4 py-2 rounded-full hover:border-pine hover:shadow-card transition-all font-semibold break-all"
           >
+            <span className="material-symbols-outlined text-[16px]">mail</span>
             junaidkanwar04@gmail.com
           </a>
-          <span className="text-border hidden sm:inline">|</span>
           <a
             href="tel:+923155128728"
-            className="text-ink-muted hover:text-ink transition-colors"
+            className="inline-flex items-center gap-2 text-ink-muted bg-white border border-border px-4 py-2 rounded-full hover:text-pine hover:border-pine hover:shadow-card transition-all"
           >
+            <span className="material-symbols-outlined text-[16px]">call</span>
             +92 315 5128728
           </a>
-          <span className="text-border hidden sm:inline">|</span>
-          <span className="text-ink-muted">Islamabad, Pakistan</span>
+          <span className="inline-flex items-center gap-2 text-ink-muted bg-white border border-border px-4 py-2 rounded-full">
+            <span className="material-symbols-outlined text-[16px]">location_on</span>
+            Islamabad, Pakistan
+          </span>
         </div>
 
         {/* Transmission Form */}
         <form
           onSubmit={handleSubmit}
-          className="w-full max-w-[540px] flex flex-col gap-space-4"
+          className="w-full max-w-[540px] bg-white border border-border rounded-2xl p-6 sm:p-space-8 shadow-card flex flex-col gap-space-5"
         >
           <div>
             <label
               htmlFor="contact-name"
-              className="block font-code-sm text-code-sm text-ink-muted uppercase mb-1"
+              className="block font-code-sm text-code-sm text-ink-muted uppercase mb-1.5"
             >
               Sender Name
             </label>
@@ -88,14 +94,14 @@ export default function Contact() {
               placeholder="e.g. Alex Morgan"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="w-full bg-surface border border-border px-4 py-3 rounded-[2px] font-body-sm text-body-sm text-ink focus:outline-none focus:border-pine placeholder:text-outline-variant"
+              className={inputClasses}
             />
           </div>
 
           <div>
             <label
               htmlFor="contact-email"
-              className="block font-code-sm text-code-sm text-ink-muted uppercase mb-1"
+              className="block font-code-sm text-code-sm text-ink-muted uppercase mb-1.5"
             >
               Email Address
             </label>
@@ -106,14 +112,14 @@ export default function Contact() {
               placeholder="alex@company.com"
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              className="w-full bg-surface border border-border px-4 py-3 rounded-[2px] font-body-sm text-body-sm text-ink focus:outline-none focus:border-pine placeholder:text-outline-variant"
+              className={inputClasses}
             />
           </div>
 
           <div>
             <label
               htmlFor="contact-message"
-              className="block font-code-sm text-code-sm text-ink-muted uppercase mb-1"
+              className="block font-code-sm text-code-sm text-ink-muted uppercase mb-1.5"
             >
               Message / Project Scope
             </label>
@@ -124,20 +130,24 @@ export default function Contact() {
               placeholder="Describe your role opening, technical objectives, or project scope..."
               value={formData.message}
               onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-              className="w-full bg-surface border border-border px-4 py-3 rounded-[2px] font-body-sm text-body-sm text-ink focus:outline-none focus:border-pine placeholder:text-outline-variant resize-none"
+              className={`${inputClasses} resize-none`}
             />
           </div>
 
           <button
             type="submit"
             disabled={status === 'sending'}
-            className="w-full bg-pine text-surface-container-lowest font-body-sm text-body-sm font-semibold py-3 rounded-[2px] hover:bg-primary transition-colors cursor-pointer text-center mt-space-2 disabled:opacity-50"
+            className="w-full inline-flex items-center justify-center gap-2 bg-ink text-white font-body-sm text-body-sm font-semibold py-3.5 rounded-full hover:bg-pine transition-all cursor-pointer text-center mt-space-2 disabled:opacity-50"
           >
-            {status === 'sending' ? 'Transmitting...' : 'Send transmission'}
+            {status === 'sending' ? 'Transmitting...' : 'Send message'}
+            {status !== 'sending' && (
+              <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+            )}
           </button>
 
           {status === 'sent' && (
-            <div className="p-space-3 bg-surface border border-pine text-center rounded-[0px] animate-fade-in">
+            <div className="inline-flex items-center justify-center gap-2 p-space-4 bg-pine/5 border border-pine/20 text-center rounded-xl animate-fade-in">
+              <span className="material-symbols-outlined text-[18px] text-pine">check_circle</span>
               <span className="font-code-sm text-code-sm text-pine font-medium">
                 Transmission received. Replies are usually sent within 24 hours.
               </span>
@@ -145,7 +155,8 @@ export default function Contact() {
           )}
 
           {status === 'error' && (
-            <div className="p-space-3 bg-surface border border-error text-center rounded-[0px] animate-fade-in">
+            <div className="inline-flex items-center justify-center gap-2 p-space-4 bg-error/5 border border-error/25 text-center rounded-xl animate-fade-in">
+              <span className="material-symbols-outlined text-[18px] text-error">error</span>
               <span className="font-code-sm text-code-sm text-error font-medium">
                 Transmission failed. Please try again or email junaidkanwar04@gmail.com directly.
               </span>
