@@ -5,7 +5,7 @@ import { GitHubIcon, LinkedInIcon } from './icons';
 
 export default function Footer() {
   return (
-    <footer className="w-full border-t border-border bg-white/70 backdrop-blur-sm py-space-8">
+    <footer className="w-full border-t border-border bg-background/70 backdrop-blur-sm py-space-8">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 flex flex-col lg:flex-row items-center justify-between gap-6 text-center lg:text-left">
 
         {/* Status / Location */}

@@ -31,6 +31,7 @@ export default function DashboardPage() {
   const [formFeatured, setFormFeatured] = useState<boolean>(false);
   const [formStatus, setFormStatus] = useState<'published' | 'draft'>('published');
   const [isSaving, setIsSaving] = useState<boolean>(false);
+  const [saveError, setSaveError] = useState<string>('');
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
 
   // Check auth session on load
@@ -101,6 +102,7 @@ export default function DashboardPage() {
 
   const openAddDrawer = () => {
     setEditingProject(null);
+    setSaveError('');
     setFormTitle('');
     setFormSlug('');
     setFormDescription('');
@@ -115,6 +117,7 @@ export default function DashboardPage() {
 
   const openEditDrawer = (project: Project) => {
     setEditingProject(project);
+    setSaveError('');
     setFormTitle(project.title);
     setFormSlug(project.slug);
     setFormDescription(project.description);
@@ -145,6 +148,7 @@ export default function DashboardPage() {
     e.preventDefault();
     if (!formTitle.trim()) return;
     setIsSaving(true);
+    setSaveError('');
 
     const payload = {
       title: formTitle,
@@ -166,9 +170,12 @@ export default function DashboardPage() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
         });
+        const data = await res.json().catch(() => ({}));
         if (res.ok) {
           await fetchProjects();
           setDrawerOpen(false);
+        } else {
+          setSaveError(data.error || 'Failed to update project — please try again.');
         }
       } else {
         // Create
@@ -177,13 +184,17 @@ export default function DashboardPage() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
         });
+        const data = await res.json().catch(() => ({}));
         if (res.ok) {
           await fetchProjects();
           setDrawerOpen(false);
+        } else {
+          setSaveError(data.error || 'Failed to create project — please try again.');
         }
       }
     } catch (err) {
       console.error('Error saving project', err);
+      setSaveError('Network error — changes could not be saved.');
     } finally {
       setIsSaving(false);
     }
@@ -328,14 +339,6 @@ export default function DashboardPage() {
               >
                 <span className="material-symbols-outlined text-[18px]">folder_data</span>
                 Projects
-              </button>
-              <button
-                type="button"
-                onClick={() => alert('Telemetry: Node v22.20.0 running on Windows with Docker runner healthy.')}
-                className="w-full flex items-center gap-space-3 px-space-3 py-space-2 text-ink-muted hover:bg-surface-container-high hover:text-ink transition-colors font-label-md text-label-md text-left cursor-pointer"
-              >
-                <span className="material-symbols-outlined text-[18px]">monitoring</span>
-                System Stats
               </button>
             </nav>
           </div>
@@ -844,6 +847,12 @@ export default function DashboardPage() {
                   </label>
                 </div>
               </form>
+
+              {saveError && (
+                <div className="mt-4 p-space-3 bg-error-container/20 border border-error text-error font-code-sm text-code-sm">
+                  {saveError}
+                </div>
+              )}
             </div>
 
             {/* Drawer Bottom Actions */}

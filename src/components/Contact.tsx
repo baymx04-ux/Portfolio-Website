@@ -32,7 +32,7 @@ export default function Contact() {
   };
 
   const inputClasses =
-    'w-full bg-white border border-border px-4 py-3.5 rounded-xl font-body-sm text-body-sm text-ink placeholder:text-outline-variant focus:outline-none focus:border-pine focus:ring-2 focus:ring-pine/15 transition-all';
+    'w-full bg-[#13161B] border border-border px-4 py-3.5 rounded-xl font-body-sm text-body-sm text-ink placeholder:text-outline-variant focus:outline-none focus:border-pine focus:ring-2 focus:ring-pine/15 transition-all';
 
   return (
     <section className="w-full border-t border-border bg-background py-space-24 scroll-mt-24" id="contact">
@@ -49,27 +49,27 @@ export default function Contact() {
           Let&apos;s build something impactful.
         </h2>
 
-        <p className="font-body-md text-body-md text-ink-muted text-center max-w-lg mb-space-8 leading-relaxed px-2">
-          Have a role, a collaboration, or a project in mind? Describe your scope below — I respond promptly.
+        <p className="font-body-md text-body-md text-ink-muted text-justify max-w-lg mb-space-8 leading-relaxed px-2">
+          Have a role, a collaboration, or a project in mind? Describe your scope below. I respond promptly.
         </p>
 
         {/* Direct Channel Links */}
         <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-2 sm:gap-space-3 mb-space-12 font-code-sm text-code-sm text-center">
           <a
             href="mailto:junaidkanwar04@gmail.com"
-            className="inline-flex items-center gap-2 text-pine bg-white border border-border px-4 py-2 rounded-full hover:border-pine hover:shadow-card transition-all font-semibold break-all"
+            className="inline-flex items-center gap-2 text-pine bg-surface border border-border px-4 py-2 rounded-full hover:border-pine hover:shadow-card transition-all font-semibold break-all"
           >
             <span className="material-symbols-outlined text-[16px]">mail</span>
             junaidkanwar04@gmail.com
           </a>
           <a
             href="tel:+923155128728"
-            className="inline-flex items-center gap-2 text-ink-muted bg-white border border-border px-4 py-2 rounded-full hover:text-pine hover:border-pine hover:shadow-card transition-all"
+            className="inline-flex items-center gap-2 text-ink-muted bg-surface border border-border px-4 py-2 rounded-full hover:text-pine hover:border-pine hover:shadow-card transition-all"
           >
             <span className="material-symbols-outlined text-[16px]">call</span>
             +92 315 5128728
           </a>
-          <span className="inline-flex items-center gap-2 text-ink-muted bg-white border border-border px-4 py-2 rounded-full">
+          <span className="inline-flex items-center gap-2 text-ink-muted bg-surface border border-border px-4 py-2 rounded-full">
             <span className="material-symbols-outlined text-[16px]">location_on</span>
             Islamabad, Pakistan
           </span>
@@ -78,7 +78,7 @@ export default function Contact() {
         {/* Transmission Form */}
         <form
           onSubmit={handleSubmit}
-          className="w-full max-w-[540px] bg-white border border-border rounded-2xl p-6 sm:p-space-8 shadow-card flex flex-col gap-space-5"
+          className="w-full max-w-[540px] bg-surface border border-border rounded-2xl p-6 sm:p-space-8 shadow-card flex flex-col gap-space-5"
         >
           <div>
             <label
@@ -137,7 +137,7 @@ export default function Contact() {
           <button
             type="submit"
             disabled={status === 'sending'}
-            className="w-full inline-flex items-center justify-center gap-2 bg-ink text-white font-body-sm text-body-sm font-semibold py-3.5 rounded-full hover:bg-pine transition-all cursor-pointer text-center mt-space-2 disabled:opacity-50"
+            className="w-full inline-flex items-center justify-center gap-2 bg-pine text-black font-body-sm text-body-sm font-semibold py-3.5 rounded-full hover:bg-primary transition-all cursor-pointer text-center mt-space-2 disabled:opacity-50"
           >
             {status === 'sending' ? 'Transmitting...' : 'Send message'}
             {status !== 'sending' && (

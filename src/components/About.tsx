@@ -19,17 +19,17 @@ export default function About() {
             </h2>
 
             <div className="font-body-md text-body-md text-ink-muted space-y-space-5 max-w-[620px] leading-relaxed">
-              <p>
-                I&apos;m a Computer Science student at Air University, Islamabad, with a strong foundation in full-stack web development. I engineer platforms characterized by low latency, intuitive user interactions, and robust asynchronous backends.
+              <p className="text-justify">
+                I&apos;m a Computer Science graduate from Air University, Islamabad, Pakistan, with a strong foundation in full-stack web development. I focus on engineering platforms that are fast, intuitive to use, and built to handle real-world demands without breaking down.
               </p>
-              <p>
-                My approach prioritizes clarity over complexity — whether designing decoupled MongoDB schemas, crafting type-safe Express middleware, or building isolated Docker environments for automated code grading. I care deeply about software durability, readability, and reliable error recovery.
+              <p className="text-justify">
+                My approach to development prioritizes clarity over complexity. I care about writing code that&apos;s easy to understand and maintain, designing systems that scale gracefully, and building applications with reliable error handling baked in from the start. Whether I&apos;m working on the frontend experience, the backend logic, or the infrastructure connecting them, I aim for software that&apos;s durable, readable, and dependable.
               </p>
             </div>
           </div>
 
           {/* Right 5 Columns: Quick Facts Card */}
-          <div className="lg:col-span-5 bg-white border border-border p-6 sm:p-space-8 rounded-2xl shadow-card">
+          <div className="lg:col-span-5 bg-surface border border-border p-6 sm:p-space-8 rounded-2xl shadow-card">
             <div className="flex items-center justify-between border-b border-border pb-space-4 mb-space-5">
               <span className="font-code-sm text-code-sm text-ink font-bold uppercase tracking-wider">
                 Quick Facts

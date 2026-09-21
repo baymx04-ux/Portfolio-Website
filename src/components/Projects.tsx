@@ -23,7 +23,7 @@ export default function Projects({ projects }: ProjectsProps) {
               Selected Work
             </h2>
           </div>
-          <span className="inline-flex items-center gap-2 font-code-sm text-code-sm text-ink-muted bg-white border border-border px-4 py-2 rounded-full shadow-card">
+          <span className="inline-flex items-center gap-2 font-code-sm text-code-sm text-ink-muted bg-surface border border-border px-4 py-2 rounded-full shadow-card">
             <span className="relative flex h-1.5 w-1.5">
               <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-pine"></span>
             </span>
@@ -87,7 +87,7 @@ export default function Projects({ projects }: ProjectsProps) {
                       {project.title}
                     </h3>
 
-                    <p className="font-body-md text-body-md text-ink-muted mb-space-5 leading-relaxed max-w-[620px]">
+                    <p className="font-body-md text-body-md text-ink-muted mb-space-5 leading-relaxed max-w-[620px] text-justify">
                       {project.description}
                     </p>
 
@@ -96,7 +96,7 @@ export default function Projects({ projects }: ProjectsProps) {
                       {project.techStack.map((tech) => (
                         <span
                           key={tech}
-                          className="font-code-sm text-code-sm text-ink bg-white border border-border px-3 py-1 rounded-full"
+                          className="font-code-sm text-code-sm text-ink bg-surface border border-border px-3 py-1 rounded-full"
                         >
                           {tech}
                         </span>

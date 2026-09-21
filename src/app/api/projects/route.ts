@@ -35,9 +35,21 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Title and description are required' }, { status: 400 });
     }
 
+    const baseSlug =
+      slug || title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+
+    const existing = await getAllProjects();
+    const takenSlugs = new Set(existing.map((p) => p.slug));
+    let finalSlug = baseSlug;
+    let suffix = 2;
+    while (takenSlugs.has(finalSlug)) {
+      finalSlug = `${baseSlug}-${suffix}`;
+      suffix += 1;
+    }
+
     const newProject = await saveProject({
       title,
-      slug: slug || title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+      slug: finalSlug,
       description,
       techStack: Array.isArray(techStack) ? techStack : (techStack ? techStack.split(',').map((s: string) => s.trim()) : []),
       imageUrl: imageUrl || 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80',

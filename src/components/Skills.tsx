@@ -53,7 +53,7 @@ export default function Skills() {
           {skillCategories.map((cat) => (
             <div
               key={cat.index}
-              className="group bg-white border border-border p-6 sm:p-space-6 flex flex-col justify-between rounded-2xl shadow-card hover:shadow-card-lg hover:-translate-y-1 transition-all duration-200"
+              className="group bg-surface border border-border p-6 sm:p-space-6 flex flex-col justify-between rounded-2xl shadow-card hover:shadow-card-lg hover:-translate-y-1 transition-all duration-200"
             >
               <div>
                 <div className="flex items-start justify-between mb-space-4">
@@ -62,7 +62,7 @@ export default function Skills() {
                     {cat.title}
                   </h3>
                 </div>
-                <p className="font-body-sm text-body-sm text-ink-muted mb-space-6">
+                <p className="font-body-sm text-body-sm text-ink-muted mb-space-6 text-justify">
                   {cat.description}
                 </p>
               </div>
@@ -82,7 +82,7 @@ export default function Skills() {
         </div>
 
         {/* Professional Competencies Strip */}
-        <div className="mt-space-10 bg-white border border-border p-4 sm:p-space-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-5 rounded-2xl shadow-card">
+        <div className="mt-space-10 bg-surface border border-border p-4 sm:p-space-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-5 rounded-2xl shadow-card">
           <span className="font-code-sm text-code-sm text-ink-muted uppercase tracking-wider shrink-0">
             Professional Practice:
           </span>

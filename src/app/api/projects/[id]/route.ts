@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getProjectById, saveProject, deleteProject } from '@/lib/storage';
+import { getProjectById, saveProject, deleteProject, getAllProjects } from '@/lib/storage';
 
 const AUTH_COOKIE_NAME = 'jk_portfolio_admin_auth';
 
@@ -36,10 +36,24 @@ export async function PUT(
       return NextResponse.json({ error: 'Project not found' }, { status: 404 });
     }
 
+    let finalSlug = existing.slug;
+    if (body.slug && body.slug !== existing.slug) {
+      const all = await getAllProjects();
+      const takenSlugs = new Set(all.filter((p) => p.id !== id).map((p) => p.slug));
+      const base = body.slug;
+      finalSlug = base;
+      let suffix = 2;
+      while (takenSlugs.has(finalSlug)) {
+        finalSlug = `${base}-${suffix}`;
+        suffix += 1;
+      }
+    }
+
     const updated = await saveProject({
       ...existing,
       ...body,
       id,
+      slug: finalSlug,
       techStack: Array.isArray(body.techStack)
         ? body.techStack
         : (body.techStack ? body.techStack.split(',').map((s: string) => s.trim()) : existing.techStack),

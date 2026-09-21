@@ -5,7 +5,7 @@ import React from 'react';
 export default function Timeline() {
   const timelineItems = [
     {
-      period: '2022 — 2026',
+      period: '2022 to 2026',
       title: 'Bachelor of Science in Computer Science',
       institution: 'Air University',
       location: 'Islamabad, PK',
@@ -14,7 +14,7 @@ export default function Timeline() {
       badges: ['Data Structures & Algorithms', 'JavaScript Ecosystem', 'Docker', 'Systems Design'],
     },
     {
-      period: '2020 — 2022',
+      period: '2020 to 2022',
       title: 'F.Sc. Pre-Engineering',
       institution: 'Army Public School and College (EME Campus)',
       location: 'Rawalpindi, PK',
@@ -23,7 +23,7 @@ export default function Timeline() {
       badges: ['Advanced Mathematics', 'Physics', 'Analytical Methods'],
     },
     {
-      period: '2018 — 2020',
+      period: '2018 to 2020',
       title: 'Matriculation in Science',
       institution: 'Progressive Model School',
       location: 'Rawalpindi, PK',
@@ -76,13 +76,13 @@ export default function Timeline() {
                 >
                   {/* Dot */}
                   <div className="absolute left-0 top-6 md:left-1/2 md:-translate-x-1/2 w-[15px] h-[15px]">
-                    <span className="absolute inset-0 rounded-full bg-white border-2 border-pine"></span>
+                    <span className="absolute inset-0 rounded-full bg-surface border-2 border-pine"></span>
                     <span className="absolute inset-[4px] rounded-full bg-pine"></span>
                   </div>
 
                   {/* Card */}
                   <div
-                    className={`ml-7 md:ml-0 bg-white border border-border rounded-2xl p-5 sm:p-space-6 shadow-card hover:shadow-card-lg transition-shadow ${
+                    className={`ml-7 md:ml-0 bg-surface border border-border rounded-2xl p-5 sm:p-space-6 shadow-card hover:shadow-card-lg transition-shadow ${
                       isLeft ? 'md:col-start-1 md:text-right' : 'md:col-start-2'
                     }`}
                   >
@@ -99,7 +99,7 @@ export default function Timeline() {
                     </h3>
                     <span className="font-body-md text-body-md text-pine font-medium">{item.institution}</span>
 
-                    <p className="font-body-sm text-body-sm text-ink-muted mt-space-3 mb-space-4 leading-relaxed">
+                    <p className="font-body-sm text-body-sm text-ink-muted mt-space-3 mb-space-4 leading-relaxed text-justify">
                       {item.description}
                     </p>
 
@@ -137,7 +137,7 @@ export default function Timeline() {
             {certifications.map((cert, i) => (
               <div
                 key={i}
-                className="group bg-white border border-border p-4 sm:p-space-5 flex items-center justify-between rounded-2xl shadow-card hover:shadow-card-lg hover:-translate-y-0.5 transition-all"
+                className="group bg-surface border border-border p-4 sm:p-space-5 flex items-center justify-between rounded-2xl shadow-card hover:shadow-card-lg hover:-translate-y-0.5 transition-all"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl bg-pine/5 border border-pine/20 flex items-center justify-center text-pine shrink-0">
